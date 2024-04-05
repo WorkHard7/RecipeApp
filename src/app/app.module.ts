@@ -15,6 +15,7 @@ import {DropdownDirective} from './directives/dropdown.directive';
 import {RouterModule, Routes} from "@angular/router";
 import {NotFoundComponent} from './components/not-found/not-found.component';
 import {RecipeStartComponent} from './components/recipes/recipe-start/recipe-start.component';
+import {RecipeEditComponent} from './components/recipes/recipe-edit/recipe-edit.component';
 
 const routes: Routes = [
   {
@@ -31,8 +32,16 @@ const routes: Routes = [
         component: RecipeStartComponent
       },
       {
+        path: 'new',
+        component: RecipeEditComponent
+      },
+      {
         path: ':id',
         component: RecipeDetailComponent
+      },
+      {
+        path: ':id/edit',
+        component: RecipeEditComponent
       }
     ]
   },
@@ -59,7 +68,8 @@ const routes: Routes = [
     ImageScaleDirective,
     DropdownDirective,
     NotFoundComponent,
-    RecipeStartComponent
+    RecipeStartComponent,
+    RecipeEditComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
