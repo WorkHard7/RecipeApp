@@ -10,12 +10,13 @@ import {RecipeDetailComponent} from './components/recipes/recipe-detail/recipe-d
 import {RecipesComponent} from "./components/recipes/recipes.component";
 import {HeaderComponent} from './components/header/header.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {ImageScaleDirective} from './directives/image-scale.directive';
 import {DropdownDirective} from './directives/dropdown.directive';
 import {RouterModule, Routes} from "@angular/router";
 import {NotFoundComponent} from './components/not-found/not-found.component';
 import {RecipeStartComponent} from './components/recipes/recipe-start/recipe-start.component';
 import {RecipeEditComponent} from './components/recipes/recipe-edit/recipe-edit.component';
+import {RecipesCarouselComponent} from './components/recipes/recipes-carousel/recipes-carousel.component';
+import {FormsModule} from "@angular/forms";
 
 const routes: Routes = [
   {
@@ -65,16 +66,17 @@ const routes: Routes = [
     RecipeDetailComponent,
     RecipesComponent,
     HeaderComponent,
-    ImageScaleDirective,
     DropdownDirective,
     NotFoundComponent,
     RecipeStartComponent,
-    RecipeEditComponent
+    RecipeEditComponent,
+    RecipesCarouselComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

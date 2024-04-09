@@ -2,7 +2,9 @@
   <div class="container-fluid d-block">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" (click)="collapsed = !collapsed">
-        <span class="icon-bar" *ngFor="let iconBar of [1, 2, 3]"></span>
+        @for (iconBar of [1, 2, 3]; track iconBar) {
+          <span class="icon-bar"></span>
+        }
       </button>
       <a routerLink="/recipes" class="navbar-brand">Recipe Book</a>
     </div>
@@ -10,10 +12,10 @@
 
       <ul class="nav navbar-nav flex-row">
         <li routerLinkActive="active">
-          <a routerLink="./recipes">Recipes</a>
+          <a (click)="navigateAndCollapse('./recipes')">Recipes</a>
         </li>
         <li routerLinkActive="active">
-          <a routerLink="./shopping-list">Shopping List</a>
+          <a (click)="navigateAndCollapse('./shopping-list')">Shopping List</a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -21,7 +23,7 @@
           <a class="dropdown-toggle" role="button">
             Manage
           </a>
-          <ul class="dropdown-menu p-4 position-absolute">
+          <ul class="dropdown-menu p-4 position-absolute bg-white text-dark">
             <li><a>Save Data</a></li>
             <li><a>Fetch Data</a></li>
           </ul>

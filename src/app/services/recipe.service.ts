@@ -21,8 +21,7 @@ export class RecipeService {
       'A delicious pizza',
       'A pizza with chopped pepper in board cookware',
 
-      'https://img.freepik.com/free-photo/side-view-pizza-with-chopped-pepper-board-cookware_176474-3183.jpg?t' +
-      '=st=1711540822~exp=1711544422~hmac=c70ad7daf0782610a52f4868c42331c7429eecca465af8b7d319b561dfbf4313&w=900',
+      'https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
       [
         new Ingredient('chicken meat', 1),
         new Ingredient('onion', 0.5),

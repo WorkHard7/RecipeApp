@@ -1,38 +1,61 @@
 <div class="row">
   <div class="col-xs-12">
-    <form>
+    <form (ngSubmit)="onSubmit(f)" #f=ngForm>
       <div class="row">
         <div class="col-sm-5 form-group">
           <label for="name">Name</label>
           <input
-            #nameInput
             type="text"
             id="name"
             class="form-control"
+            name="name"
+            required
+            ngModel
           >
         </div>
         <div class="col-sm-2 form-group">
           <label for="amount">Amount</label>
           <input
-            #amountInput
             type="number"
             id="amount"
             class="form-control"
+            name="amount"
+            [pattern]="'^[1-9]+[0-9]*$'"
+            required
+            ngModel
           >
         </div>
       </div>
+      @if (f.invalid && f.touched) {
+        <p class="text-danger">Please complete both fields!</p>
+      }
       <div class="row">
         <div class="col-xs-12">
           <button
-            (click)="onAddNewIngredient($event)"
             style="margin-right: 5px"
             class="btn btn-success"
             type="submit"
+            [disabled]="f.invalid"
           >
-            Add
+            {{editMode ? 'Update' : 'Add'}}
           </button>
-          <button style="margin-right: 5px" class="btn btn-danger" type="button">Delete</button>
-          <button class="btn btn-primary" type="button">Clear</button>
+          <button
+            (click)="onDeleteIngredient()"
+            style="margin-right: 5px"
+            class="btn btn-danger"
+            type="button"
+            [disabled]="!editMode"
+          >
+            Delete
+          </button>
+          <button
+            (click)="onClear()"
+            class="btn btn-primary"
+            type="button"
+            [disabled]="!f.value.name"
+          >
+            Clear
+          </button>
         </div>
       </div>
     </form>

@@ -5,8 +5,9 @@
     <ul class="list-group">
       @for (ingredient of ingredients; track ingredient.name) {
         <a
+          (click)="onIngredientClick($index)"
           class="list-group-item"
-          style="cursor: pointer"
+          style="cursor: pointer; border: 1px solid gray"
         >
           {{ ingredient.name }} ({{ ingredient.amount }})
         </a>

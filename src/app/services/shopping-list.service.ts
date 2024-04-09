@@ -1,25 +1,75 @@
 import {Injectable} from '@angular/core';
 import {Ingredient} from "../models/ingredient.model";
+import {Subject, BehaviorSubject, Observable, map} from "rxjs";
+import {ingredients} from "../mocks/ingredients";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShoppingListService {
-  private ingredients: Ingredient[] = [
-    new Ingredient('Strawberry', 5),
-    new Ingredient('Berries', 2),
-    new Ingredient('Flour', 2),
-  ];
+  editingIngredientIndex = new Subject<number>();
 
-  addNewIngredient(newIngredient: Ingredient) {
-    this.ingredients.push(new Ingredient(newIngredient.name, newIngredient.amount));
+  private ingredients: BehaviorSubject<Ingredient[]> = new BehaviorSubject<Ingredient[]>([]);
+
+  constructor() {
+    this.getIngredientsFromLocalStorage();
+    this.setIngredientsToLocalStorage();
   }
 
-  getIngredients(): Ingredient[] {
-    return this.ingredients;
+  addNewIngredient(newIngredient: Ingredient): void {
+    const currentIngredients = this.ingredients.getValue();
+    const updatedIngredients = [...currentIngredients, new Ingredient(newIngredient.name, newIngredient.amount)];
+    this.ingredients.next(updatedIngredients);
+
+    this.updateIngredientsLocalStorage(updatedIngredients);
   }
 
-  addIngredientsFromRecipe(ingredients: Ingredient[]) {
-    this.ingredients.push(...ingredients);
+  getIngredient(index: number): Ingredient {
+    const currentIngredients = this.ingredients.getValue();
+    return currentIngredients[index];
+  }
+
+  getIngredients(): Observable<Ingredient[]> {
+    return this.ingredients.pipe(
+      map(ingredients => ingredients || [])
+    );
+  }
+
+  addIngredientsFromRecipe(ingredients: Ingredient[]): void {
+    this.ingredients.next([...ingredients]);
+  }
+
+  deleteIngredient(index: number): void {
+    const currentIngredients = this.ingredients.getValue();
+    currentIngredients.splice(index, 1);
+
+    this.ingredients.next(currentIngredients);
+    this.updateIngredientsLocalStorage(currentIngredients);
+  }
+
+  updateIngredient(index: number, updatedIngredient: Ingredient): void {
+    const currentIngredients = this.ingredients.getValue();
+
+    currentIngredients[index] = updatedIngredient;
+    this.ingredients.next(currentIngredients);
+    this.updateIngredientsLocalStorage(currentIngredients);
+  }
+
+  private getIngredientsFromLocalStorage() {
+    const ingredientsLocalStorage = localStorage.getItem('ingredients');
+
+    if (ingredientsLocalStorage) {
+      this.ingredients.next(JSON.parse(ingredientsLocalStorage));
+    } else {
+      this.ingredients.next(ingredients);
+    }
+  }
+
+  setIngredientsToLocalStorage(): void {
+    localStorage.setItem('ingredients', JSON.stringify(this.ingredients.getValue()));
+  }
+
+  updateIngredientsLocalStorage(updatedIngredients: Ingredient[]): void {
+    localStorage.setItem('ingredients', JSON.stringify(updatedIngredients))
   }
 }
