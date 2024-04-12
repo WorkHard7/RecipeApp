@@ -46,7 +46,7 @@ export class ShoppingListEditComponent implements OnInit {
         this.editedIngredientIndex,
         new Ingredient(value.name, value.amount))
     } else {
-      this.shoppingListService.addNewIngredient({
+      this.shoppingListService.addIngredient({
         name: value.name,
         amount: value.amount
       })

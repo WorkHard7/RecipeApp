@@ -8,7 +8,6 @@ import {ingredients} from "../mocks/ingredients";
 })
 export class ShoppingListService {
   editingIngredientIndex = new Subject<number>();
-
   private ingredients: BehaviorSubject<Ingredient[]> = new BehaviorSubject<Ingredient[]>([]);
 
   constructor() {
@@ -16,7 +15,17 @@ export class ShoppingListService {
     this.setIngredientsToLocalStorage();
   }
 
-  addNewIngredient(newIngredient: Ingredient): void {
+  private getIngredientsFromLocalStorage() {
+    const ingredientsLocalStorage = localStorage.getItem('ingredients');
+
+    if (ingredientsLocalStorage) {
+      this.ingredients.next(JSON.parse(ingredientsLocalStorage));
+    } else {
+      this.ingredients.next(ingredients);
+    }
+  }
+
+  addIngredient(newIngredient: Ingredient): void {
     const currentIngredients = this.ingredients.getValue();
     const updatedIngredients = [...currentIngredients, new Ingredient(newIngredient.name, newIngredient.amount)];
     this.ingredients.next(updatedIngredients);
@@ -24,15 +33,15 @@ export class ShoppingListService {
     this.updateIngredientsLocalStorage(updatedIngredients);
   }
 
-  getIngredient(index: number): Ingredient {
-    const currentIngredients = this.ingredients.getValue();
-    return currentIngredients[index];
-  }
-
   getIngredients(): Observable<Ingredient[]> {
     return this.ingredients.pipe(
       map(ingredients => ingredients || [])
     );
+  }
+
+  getIngredient(index: number): Ingredient {
+    const currentIngredients = this.ingredients.getValue();
+    return currentIngredients[index];
   }
 
   addIngredientsFromRecipe(ingredients: Ingredient[]): void {
@@ -53,16 +62,6 @@ export class ShoppingListService {
     currentIngredients[index] = updatedIngredient;
     this.ingredients.next(currentIngredients);
     this.updateIngredientsLocalStorage(currentIngredients);
-  }
-
-  private getIngredientsFromLocalStorage() {
-    const ingredientsLocalStorage = localStorage.getItem('ingredients');
-
-    if (ingredientsLocalStorage) {
-      this.ingredients.next(JSON.parse(ingredientsLocalStorage));
-    } else {
-      this.ingredients.next(ingredients);
-    }
   }
 
   setIngredientsToLocalStorage(): void {

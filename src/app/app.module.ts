@@ -15,8 +15,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {NotFoundComponent} from './components/not-found/not-found.component';
 import {RecipeStartComponent} from './components/recipes/recipe-start/recipe-start.component';
 import {RecipeEditComponent} from './components/recipes/recipe-edit/recipe-edit.component';
-import {RecipesCarouselComponent} from './components/recipes/recipes-carousel/recipes-carousel.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 const routes: Routes = [
   {
@@ -69,14 +68,14 @@ const routes: Routes = [
     DropdownDirective,
     NotFoundComponent,
     RecipeStartComponent,
-    RecipeEditComponent,
-    RecipesCarouselComponent
+    RecipeEditComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,50 +1,29 @@
-@if (!carousel) {
-  <ng-container>
-    <a
-      routerLinkActive="active"
-      [routerLink]="[index]"
-      role="button"
-      [attr.data-aos]="index % 2 === 0 ? 'fade-left' : 'fade-right'"
-      data-aos-easing="ease-in-sine"
-      class="list-group-item"
-    >
+<ng-container>
+  <a
+    routerLinkActive="active"
+    [routerLink]="[index]"
+    role="button"
+    [attr.data-aos]="index % 2 === 0 ? 'fade-left' : 'fade-right'"
+    class="list-group-item"
+  >
+    <div
+      id="imgCont"
+      class="d-flex justify-content-between">
       <div
-        id="imgCont"
-        class="d-flex justify-content-between">
-        <div
-          style="flex: 1.3"
-          class="d-flex flex-column text-center justify-content-center pull-left">
-          <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
-          <p class="list-group-item-text">{{ recipe.description }}</p>
-        </div>
-        <div
-          style="flex: 1"
-          class="img-container">
-          <img
-            [src]="recipe.imagePath"
-            alt="A tasty delicious pie"
-            class="img-responsive"
-          >
-        </div>
+        style="flex: 1.3"
+        class="d-flex flex-column text-center justify-content-center pull-left">
+        <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
+        <p class="list-group-item-text">{{ recipe.description }}</p>
       </div>
-    </a>
-  </ng-container>
-} @else {
-  <ng-container>
-    <a
-      [routerLink]="[index]"
-      role="button"
-      data-aos="fade-in"
-      data-aos-easing="ease-in-sine"
-      data-aos-duration="600"
-    >
-      <div class="img-container-carousel">
+      <div
+        style="flex: 1"
+        class="img-container">
         <img
           [src]="recipe.imagePath"
           alt="A tasty delicious pie"
           class="img-responsive"
         >
       </div>
-    </a>
-  </ng-container>
-}
+    </div>
+  </a>
+</ng-container>
